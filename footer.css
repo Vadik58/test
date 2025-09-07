@@ -1,0 +1,21 @@
+.footer {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.footer__address {
+    font-size: x-large;
+}
+
+.footer__rights {
+    font-size: larger;
+}
+
+.footer__address a {
+    color: mediumseagreen;
+    transition: color 0.2s ease;
+}
+
+.footer__address a:hover {
+    color: cornflowerblue;
+}

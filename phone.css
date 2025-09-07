@@ -1,0 +1,216 @@
+@media (max-width: 600px) {
+
+    .header {
+        text-align: center;
+    }
+
+    .header__name {
+        font-size: xx-large;
+    }
+
+    /*----------------------------------------------------------------------------------------------------------------*/
+
+    .calculator {
+    }
+
+    .calculator__form {
+        display: flex;
+        flex-direction: column;
+
+        text-align: left;
+        border: 7px dotted mediumseagreen;
+        padding: 25px;
+        font-size: large;
+        font-weight: lighter;
+
+        margin: 5px;
+    }
+
+    .calculator__input {
+        margin-bottom: 10px;
+        border: 3px solid mediumseagreen;
+        border-radius: 10px;
+        padding: 5px;
+        cursor: pointer;
+        font-family: inherit;
+    }
+
+    .error-message {
+        color: crimson;
+        font-size: 12px;
+        margin-top: -10px;
+        display: none;
+    }
+
+    .calculator__button-wrapper {
+        margin-top: 10px;
+
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .calculator__button {
+        cursor: pointer;
+
+        border: 2px solid whitesmoke;
+        border-radius: 10px;
+
+        color: whitesmoke;
+        background-color: darkslategray;
+
+        font-size: large;
+        font-family: inherit;
+
+        padding: 5px;
+
+        transition: all 0.1s ease;
+    }
+
+    .calculator__button:active {
+        transform: scale(1.05);
+        background-color: mediumseagreen;
+    }
+
+    @media (hover: none) {
+    .calculator__button:hover {
+        background-color: darkslategray;
+        transform: none;
+        }
+    }
+
+
+    #exportExcel {
+        margin-left: 15px;
+    }
+
+    .help {
+        color: cornflowerblue;
+        cursor: pointer;
+        position: relative;
+        display: inline-block;
+    }
+
+    .tooltip {
+        position: absolute;
+        top: 120%;
+        left: 0;
+        background: rgba(47,79,79,0.95);
+        color: #fff;
+        padding: 10px 12px;
+        border-radius: 8px;
+        font-size: 13px;
+        line-height: 1.4;
+        white-space: normal;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+        z-index: 10;
+        min-width: 250px;
+        max-width: 90vw;
+        box-sizing: border-box;
+    }
+
+    .help:hover .tooltip {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .help.active .tooltip {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+
+    /*----------------------------------------------------------------------------------------------------------------*/
+
+    .calculator__result-wrapper {
+        display: none;
+    }
+
+    .calculator__result-wrapper.show {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+
+        margin: 0 5px;
+    }
+
+    .calculator__result {
+        font-size: large;
+        font-weight: lighter;
+    }
+
+    .calculator__result br{
+        display: none;
+    }
+
+    .additionalInflation {
+        font-size: 14px;
+        white-space: pre-line;
+    }
+
+    .final-sum {
+        border-top: 4px dotted mediumseagreen;;
+        font-size: 23px;
+    }
+
+    .donutChart-wrapper {
+        height: 330px;
+        width: 440px;
+        margin-top: -50px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #donutChart {
+        height: 100%;
+        width: 100%;
+    }
+
+    /*----------------------------------------------------------------------------------------------------------------*/
+
+    .chart {
+        position: relative;
+        margin: 0 auto;
+        width: 97%;
+        height: 300px;
+        background-color: white;
+        border-radius: 30px;
+        display: none;
+    }
+
+    #profitChart{
+        width: 100%;
+        height: 100%;
+        min-height: 300px;
+    }
+
+    /*----------------------------------------------------------------------------------------------------------------*/
+
+    .footer {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .footer__address {
+        font-size: large;
+    }
+
+    .footer__rights {
+        font-size: larger;
+    }
+
+    .footer__address a {
+        color: mediumseagreen;
+        transition: color 0.2s ease;
+    }
+
+    .footer__address a:hover {
+        color: cornflowerblue;
+    }
+}
