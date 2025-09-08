@@ -8,12 +8,15 @@
 
     body {
         overflow-x: hidden;
+        width: 100vw;
     }
 
     /*----------------------------------------------------------------------------------------------------------------*/
 
     .header {
         text-align: center;
+
+        margin-bottom: 20px;
     }
 
     .header__name {
@@ -30,7 +33,7 @@
         flex-direction: column;
 
         text-align: left;
-        border: 7px dotted mediumseagreen;
+        border: 5px dotted mediumseagreen;
         padding: 25px;
         font-size: large;
         font-weight: lighter;
@@ -51,7 +54,7 @@
 
     .calculator__input_type_amount,
     .calculator__input_type_deposits {
-        width: 150px;
+        width: 140px;
     }
 
     .calculator__input_type_rate,
@@ -61,7 +64,7 @@
     }
 
     .calculator__input_type_deposits {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 
     .calculator__checkbox {
@@ -77,17 +80,14 @@
 
     .calculator__button-wrapper {
         margin-top: 10px;
-
         display: flex;
         justify-content: flex-end;
     }
 
     .calculator__button {
         cursor: pointer;
-
         border: 2px solid whitesmoke;
         border-radius: 10px;
-
         color: whitesmoke;
         background-color: darkslategray;
 
@@ -95,22 +95,23 @@
         font-family: inherit;
 
         padding: 5px;
+        transition: all 0.3s ease;
 
-        transition: all 0.1s ease;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
     }
 
-    .calculator__button:active {
-        transform: scale(1.05);
-        background-color: mediumseagreen;
-    }
-
-    @media (hover: none) {
-    .calculator__button:hover {
-        background-color: darkslategray;
-        transform: none;
+    @media (hover: hover) and (pointer: fine) {
+        .calculator__button:hover {
+            transform: scale(1.05);
+            background-color: mediumseagreen;
         }
     }
 
+    .calculator__button.touch-pressed {
+        background-color: mediumseagreen !important;
+        transform: scale(1.05);
+    }
 
     #exportExcel {
         margin-left: 15px;
@@ -169,11 +170,16 @@
         gap: 10px;
 
         margin: 0 5px;
+        max-width: 100%;
     }
 
     .calculator__result {
         font-size: large;
         font-weight: lighter;
+    }
+
+    .text-result {
+        margin: 10px 0;
     }
 
     .calculator__result br{
@@ -191,8 +197,8 @@
     }
 
     .donutChart-wrapper {
-        height: 330px;
-        width: 440px;
+        width: 100%;
+        max-width: 440px;
         margin-top: -50px;
 
         display: flex;
@@ -215,6 +221,7 @@
         background-color: white;
         border-radius: 30px;
         display: none;
+        max-width: 100%;
     }
 
     #profitChart{
