@@ -405,9 +405,13 @@ function createChart(chartLabels, investedArr, balances) {
                 fontWeight: "lighter",
             },
             formatter: params => {
-                return params.map(p =>
-                    `<b>${p.seriesName}</b>: ${formatResult(p.value).toLocaleString("ru-RU")} ₽`
+                let header = `<b>${params[0].axisValue}</b>`;
+
+                let values = params.map(p =>
+                    `<b>${p.seriesName}</b>: ${formatResult(p.value)} ₽`
                 ).join("<br>");
+
+                return header + "<br>" + values;
             },
             confine: true,
             padding: isMobile ? 2 : 5,
