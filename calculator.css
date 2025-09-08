@@ -19,10 +19,24 @@
     margin-bottom: 10px;
     border: 3px solid mediumseagreen;
     border-radius: 10px;
-    padding: 5px;
+    padding: 2px;
     cursor: pointer;
     font-family: inherit;
+    font-size: 17px;
 }
+
+.calculator__input_type_amount,
+.calculator__input_type_deposits {
+    width: 200px;
+}
+
+.calculator__input_type_rate,
+.calculator__input_type_years,
+.calculator__input_type_months {
+    width: 70px;
+}
+
+
 
 .error-message {
     color: crimson;
