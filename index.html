@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta name="author" content="Vadim">
 
     <link rel="stylesheet" href="style.css">
@@ -44,32 +44,32 @@
 
             <label>
                 Сумма инвестиций:
-                <input type="text" class="calculator__input" id="amount" value="100000" required>
+                <input type="text" class="calculator__input calculator__input_type_amount" id="amount" value="100000" required>
                 &#8381;
                 <div class="error-message" id="amount-error"></div>
             </label>
 
             <label>
                 Процент годовых:
-                <input type="number" class="calculator__input" id="rate" min="1" max="30" step="0.1" value="20" required>
+                <input type="number" class="calculator__input calculator__input_type_rate" id="rate" min="1" max="30" step="0.1" value="20" required>
                 %
                 <div class="error-message" id="rate-error"></div>
             </label>
 
             <label>
                 Срок — лет:
-                <input type="number" class="calculator__input" id="years" min="0" value="2" required>
+                <input type="number" class="calculator__input calculator__input_type_years" id="years" min="0" value="2" required>
                 <div class="error-message" id="years-error"></div>
             </label>
 
             <label>
                 Срок — месяцев:
-                <input type="number" class="calculator__input" id="months" min="0" max="11" value="0" required>
+                <input type="number" class="calculator__input calculator__input_type_months" id="months" min="0" max="11" value="0" required>
                 <div class="error-message" id="months-error"></div>
             </label>
 
             <label>
-                <input type="checkbox" id="adjustmentRecurrent">
+                <input type="checkbox" class="calculator__checkbox" id="adjustmentRecurrent">
                 Учитывать рекуррентные взносы
             </label>
 
@@ -79,17 +79,18 @@
                     <option value="quarterlyAdd">Ежеквартальное пополнение</option>
                     <option value="yearlyAdd">Ежегодное пополнение</option>
                 </select>
-                <input type="text" class="calculator__input" id="depositsAdd">
+                <input type="text" class="calculator__input calculator__input_type_deposits" id="depositsAdd">
+                &#8381;
                 <div class="error-message" id="deposits-error"></div>
             </label>
 
             <label>
-                <input type="checkbox" class="calculator__input" id="adjustInflation">
+                <input type="checkbox" class="calculator__checkbox" id="adjustInflation">
                 Учитывать инфляцию
             </label>
 
             <label>
-                <input type="checkbox" class="calculator__input" id="adjustTax">
+                <input type="checkbox" class="calculator__checkbox" id="adjustTax">
                 Учитывать
                 <span class="help">
                     НДФЛ
