@@ -23,7 +23,7 @@ function validate(amount, rate, years, months, depositsAdd, adjustRecurrent) {
         valid = false;
     }
 
-    if (!rate || rate < 0 || rate > 100) {
+    if (isNaN(rate) || rate < 0 || rate > 100) {
         showError("rate-error", "Введите процентную ставку от 0 до 100");
         valid = false;
     }
@@ -751,3 +751,4 @@ document.addEventListener("DOMContentLoaded", function() {
         document.querySelectorAll(".help.active").forEach(h => h.classList.remove("active"));
     });
 });
+
