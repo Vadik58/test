@@ -18,7 +18,7 @@ function validate(amount, rate, years, months, depositsAdd, adjustRecurrent) {
 
     let valid = true;
 
-    if (!amount) {
+    if (isNaN(amount)) {
         showError("amount-error", "Введите сумму");
         valid = false;
     }
@@ -284,7 +284,10 @@ function applyTax(balances, investedArr, frequency, years, months) {
     return totalTax;
 }
 
-const isMobile = window.innerWidth < 768;
+function checkIsMobile() {
+    return window.innerWidth < 600;
+}
+
 let donutChart;
 function createDonutChart(endInflation, balances, investedArr, NDFL, adjustInflation, adjustTax) {
     const donutEl = document.getElementById("donutChart");
@@ -315,7 +318,7 @@ function createDonutChart(endInflation, balances, investedArr, NDFL, adjustInfla
     }
 
     const option = {
-        title: isMobile ? { show: false } : {
+        title: checkIsMobile() ? { show: false } : {
             text: 'Структура итоговой суммы',
             left: 'center',
             top: 10,
@@ -332,10 +335,10 @@ function createDonutChart(endInflation, balances, investedArr, NDFL, adjustInfla
                 return `${params.name}: ${formattedValue} (${Math.round(params.percent)}%)`;
             },
             textStyle: {
-                fontSize: isMobile ? 12 : 15,
+                fontSize: checkIsMobile() ? 12 : 15,
             },
             confine: true,
-            padding: isMobile ? 2 : 5,
+            padding: checkIsMobile() ? 2 : 5,
             position: function (point, params, dom, rect, size) {
                 let x = point[0];
                 let y = point[1];
@@ -359,12 +362,12 @@ function createDonutChart(endInflation, balances, investedArr, NDFL, adjustInfla
         series: [
             {
                 type: 'pie',
-                radius: isMobile ? ['25%', '50%'] : ['35%', '63%'],
+                radius: checkIsMobile() ? ['25%', '50%'] : ['35%', '63%'],
                 label: {
                     formatter: function (params) {
                         return `${params.name}\n${Math.round(params.percent)}%`;
                     },
-                    fontSize: isMobile ? 13 : 16,
+                    fontSize: checkIsMobile() ? 13 : 16,
                     fontWeight: 'bold',
                     fontFamily: "Nunito",
                 },
@@ -391,7 +394,7 @@ function createChart(chartLabels, investedArr, balances) {
             left: 10,
             textStyle: {
                 color: "rgb(47, 79, 79)",
-                fontSize: isMobile ? 16 : 24,
+                fontSize: checkIsMobile() ? 16 : 24,
                 fontFamily: "Nunito",
                 fontWeight: "normal",
             }
@@ -401,7 +404,7 @@ function createChart(chartLabels, investedArr, balances) {
             backgroundColor: "rgba(47,79,79,0.9)",
             textStyle: {
                 color: "#fff",
-                fontSize: isMobile ? 12 : 15,
+                fontSize: checkIsMobile() ? 12 : 15,
                 fontWeight: "lighter",
             },
             formatter: params => {
@@ -414,7 +417,7 @@ function createChart(chartLabels, investedArr, balances) {
                 return header + "<br>" + values;
             },
             confine: true,
-            padding: isMobile ? 2 : 5,
+            padding: checkIsMobile() ? 2 : 5,
             position: function (point, params, dom, rect, size) {
                 let x = point[0];
                 let y = point[1];
@@ -438,14 +441,14 @@ function createChart(chartLabels, investedArr, balances) {
         legend: {
             top: 5,
             textStyle: {
-                fontSize: isMobile ? 12 : 16,
+                fontSize: checkIsMobile() ? 12 : 16,
             },
         },
         grid: {
             left: 75,
-            right: isMobile ? 20 : 40,
+            right: checkIsMobile() ? 20 : 40,
             top: 80,
-            bottom: isMobile ? 40 : 80,
+            bottom: checkIsMobile() ? 40 : 80,
         },
         xAxis: {
             type: "category",
@@ -463,7 +466,7 @@ function createChart(chartLabels, investedArr, balances) {
                 }
             },
         },
-        dataZoom: isMobile ? [
+        dataZoom: checkIsMobile() ? [
             { type: "inside" }] :
             [ { type: "inside" },
                 {
@@ -630,21 +633,21 @@ function runCalculation() {
     const resultsEl = document.getElementById("result");
 
     let resultHTML = `
-    <p><b>Начальная сумма:</b><br> ${formatResult(amount)} ₽</p>`;
+    <p class="text-result"><b>Начальная сумма:</b><br> ${formatResult(amount)} ₽</p>`;
     if (adjustRecurrent) {
-        resultHTML += `<p><b>Сумма пополнений:</b><br> ${formatResult(investedArr.at(-1) - amount)} ₽</p>`;
+        resultHTML += `<p class="text-result"><b>Сумма пополнений:</b><br> ${formatResult(investedArr.at(-1) - amount)} ₽</p>`;
     }
-    resultHTML += `<p><b>Потенциальная прибыль:</b><br> ${formatResult(balances.at(-1) - investedArr.at(-1))} ₽</p>`;
+    resultHTML += `<p class="text-result"><b>Потенциальная прибыль:</b><br> ${formatResult(balances.at(-1) - investedArr.at(-1))} ₽</p>`;
     if (adjustTax) {
-        resultHTML += `<p><b>Налог:</b><br> -${formatResult(NDFL)} ₽</p>`;
+        resultHTML += `<p class="text-result"><b>Налог:</b><br> -${formatResult(NDFL)} ₽</p>`;
     }
     if (adjustInflation) {
-        resultHTML += `<p><b>Инфляция:</b><br> ${formatResult(balances.at(-1) - endInflation - NDFL)} ₽<br>
+        resultHTML += `<p class="text-result"><b>Инфляция:</b><br> ${formatResult(balances.at(-1) - endInflation - NDFL)} ₽<br>
                       <span class="additionalInflation">
                       Сумма с учётом инфляции: ${formatResult(endInflation)} ₽</span></p>`;
     }
 
-    resultHTML += `<p class="final-sum"><b>Итоговая сумма:</b><br> ${formatResult(balances.at(-1) - NDFL)} ₽</p>`;
+    resultHTML += `<p class="final-sum text-result"><b>Итоговая сумма:</b><br> ${formatResult(balances.at(-1) - NDFL)} ₽</p>`;
 
     resultsEl.innerHTML = resultHTML;
 
@@ -660,7 +663,7 @@ function runCalculation() {
 }
 
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const frequencySelect = document.getElementById("frequency");
     const depositsAddOption = document.getElementById("deposits");
     const depositsAddInput = document.getElementById("depositsAdd");
@@ -671,7 +674,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     window.amountMask = IMask(inputAmount, {
         mask: Number,
-        min: 1,
+        min: 0,
         max: 1000000000000,
         thousandsSeparator: ' ',
     });
@@ -716,27 +719,63 @@ document.addEventListener("DOMContentLoaded", function() {
     frequencySelect.addEventListener("change", absenceOfMonths);
     absenceOfMonths();
 
-    document.getElementById("calculateBtn").addEventListener("click", function(e) {
+    document.getElementById("calculateBtn").addEventListener("click", function (e) {
         e.preventDefault();
         runCalculation();
     });
 
-    document.getElementById("calc-form").addEventListener("submit", function(e) {
+    document.getElementById("calc-form").addEventListener("submit", function (e) {
         e.preventDefault();
         runCalculation();
     });
 
-    window.addEventListener('resize', function() {
+    window.addEventListener("resize", function () {
         if (chartInstance) {
             chartInstance.resize();
         }
         if (donutChart) {
-            donutChart.resize();
+            createDonutChart(
+                lastEndInflation,
+                lastBalances,
+                lastInvestedArr,
+                lastNDFL,
+                lastAdjustInflation,
+                lastAdjustTax
+            );
+        }
+    });
+
+    document.querySelectorAll('.calculator__button').forEach(btn => {
+        // сенсорные события
+        btn.addEventListener('touchstart', () => btn.classList.add('touch-pressed'), { passive: true });
+        btn.addEventListener('touchend', () => btn.classList.remove('touch-pressed'));
+        btn.addEventListener('touchcancel', () => btn.classList.remove('touch-pressed'));
+
+        btn.addEventListener('pointerdown', () => btn.classList.add('touch-pressed'));
+        btn.addEventListener('pointerup', () => btn.classList.remove('touch-pressed'));
+        btn.addEventListener('pointercancel', () => btn.classList.remove('touch-pressed'));
+
+        btn.addEventListener('click', () => btn.blur());
+    });
+
+    function clearPressedButtons() {
+        document.querySelectorAll('.calculator__button')
+            .forEach(b => b.classList.remove('touch-pressed'));
+        if (document.activeElement && document.activeElement.blur) {
+            document.activeElement.blur();
+        }
+    }
+
+    window.addEventListener("orientationchange", clearPressedButtons);
+    window.addEventListener("resize", clearPressedButtons);
+    document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") {
+            clearPressedButtons();
         }
     });
 
     document.querySelectorAll(".help").forEach(el => {
-        el.addEventListener("click", function(e) {
+        el.addEventListener("click", function (e) {
             e.stopPropagation();
             if (this.classList.contains("active")) {
                 this.classList.remove("active");
@@ -751,4 +790,5 @@ document.addEventListener("DOMContentLoaded", function() {
         document.querySelectorAll(".help.active").forEach(h => h.classList.remove("active"));
     });
 });
+
 
