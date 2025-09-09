@@ -751,8 +751,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.addEventListener("orientationchange", () => {
         if (donutChart && lastBalances) {
-            donutChart.dispose();
-            donutChart = null;
+           
             createDonutChart(
                 lastEndInflation,
                 lastBalances,
@@ -766,8 +765,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.addEventListener("resize", () => {
         if (donutChart && lastBalances) {
-            donutChart.dispose();
-            donutChart = null;
+            donutChart.resize();
+
             createDonutChart(
                 lastEndInflation,
                 lastBalances,
@@ -778,7 +777,6 @@ document.addEventListener("DOMContentLoaded", function () {
             );
         }
     });
-
 
     document.querySelectorAll(".help").forEach(el => {
         el.addEventListener("click", function (e) {
