@@ -96,10 +96,8 @@
 
         font-size: large;
         font-family: inherit;
-    }
-
-    .calculator__button {
-        transition: transform 0.2s ease, background-color 0.2s ease;
+    
+    transition: transform 0.2s ease, background-color 0.2s ease;
     }
 
     .calculator__button:active {
@@ -248,5 +246,6 @@
         color: cornflowerblue;
     }
 }
+
 
 
