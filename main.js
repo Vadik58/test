@@ -745,35 +745,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    document.querySelectorAll('.calculator__button').forEach(btn => {
-        // сенсорные события
-        btn.addEventListener('touchstart', () => btn.classList.add('touch-pressed'), { passive: true });
-        btn.addEventListener('touchend', () => btn.classList.remove('touch-pressed'));
-        btn.addEventListener('touchcancel', () => btn.classList.remove('touch-pressed'));
-
-        btn.addEventListener('pointerdown', () => btn.classList.add('touch-pressed'));
-        btn.addEventListener('pointerup', () => btn.classList.remove('touch-pressed'));
-        btn.addEventListener('pointercancel', () => btn.classList.remove('touch-pressed'));
-
-        btn.addEventListener('click', () => btn.blur());
-    });
-
-    function clearPressedButtons() {
-        document.querySelectorAll('.calculator__button')
-            .forEach(b => b.classList.remove('touch-pressed'));
-        if (document.activeElement && document.activeElement.blur) {
-            document.activeElement.blur();
-        }
-    }
-
-    window.addEventListener("orientationchange", clearPressedButtons);
-    window.addEventListener("resize", clearPressedButtons);
-    document.addEventListener("visibilitychange", () => {
-        if (document.visibilityState === "visible") {
-            clearPressedButtons();
-        }
-    });
-
     document.querySelectorAll(".help").forEach(el => {
         el.addEventListener("click", function (e) {
             e.stopPropagation();
@@ -790,5 +761,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".help.active").forEach(h => h.classList.remove("active"));
     });
 });
+
 
 
