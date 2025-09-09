@@ -84,33 +84,38 @@
         justify-content: flex-end;
     }
 
-    .calculator__button {
+ .calculator__button {
         cursor: pointer;
+
         border: 2px solid whitesmoke;
         border-radius: 10px;
+
+        padding: 5px;
         color: whitesmoke;
         background-color: darkslategray;
 
         font-size: large;
         font-family: inherit;
-
-        padding: 5px;
-        transition: all 0.3s ease;
-
-        -webkit-tap-highlight-color: transparent;
-        touch-action: manipulation;
     }
 
-    @media (hover: hover) and (pointer: fine) {
-        .calculator__button:hover {
-            transform: scale(1.05);
-            background-color: mediumseagreen;
+    .calculator__button {
+        transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .calculator__button:active {
+        background-color: mediumseagreen;
+        transform: scale(0.95);
+    }
+    
+    @media (min-width: 601px), (max-width: 1024px) {
+        .calculator__button {
+            transition: transform 0.2s ease, background-color 0.2s ease;
         }
-    }
 
-    .calculator__button.touch-pressed {
-        background-color: mediumseagreen !important;
-        transform: scale(1.05);
+        .calculator__button:active {
+            background-color: mediumseagreen;
+            transform: scale(0.95);
+        }
     }
 
     #exportExcel {
@@ -254,3 +259,4 @@
         color: cornflowerblue;
     }
 }
+
