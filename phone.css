@@ -107,8 +107,7 @@
         transition: transform 0.2s ease, background-color 0.2s ease;
     }
 
-    .calculator__button:active,
-    .calculator__button.active {
+    .calculator__button:active {
         background-color: mediumseagreen;
         transform: scale(0.95);
     }
@@ -254,3 +253,4 @@
         color: cornflowerblue;
     }
 }
+
