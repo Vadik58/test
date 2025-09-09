@@ -108,7 +108,7 @@ function calculationInvestment(amount, rate, years, months, frequency, recurrent
             const startDay = Math.floor((month - 1) * daysPerMonth) + 1;
             const endDay = Math.floor(month * daysPerMonth);
 
-           
+            // Проверяем пополнения в этом месяце
             const monthDeposits = depositsTimeline.filter(d =>
                 d.day >= startDay && d.day <= endDay
             );
@@ -132,7 +132,7 @@ function calculationInvestment(amount, rate, years, months, frequency, recurrent
             const startDay = Math.floor((quarter - 1) * daysPerQuarter) + 1;
             const endDay = Math.floor(quarter * daysPerQuarter);
 
-        
+            // Проверяем пополнения в этом квартале
             const quarterDeposits = depositsTimeline.filter(d =>
                 d.day >= startDay && d.day <= endDay
             );
@@ -230,7 +230,7 @@ function applyTax(balances, investedArr, frequency, years, months) {
             monthlyProfits.push(profitMonth);
         }
     } else if (frequency === "quarterly") {
-        
+        // Для квартального начисления распределяем прибыль по месяцам
         for (let q = 1; q < balances.length; q++) {
             const profitQuarter = (balances[q] - investedArr[q]) -
                 (balances[q - 1] - investedArr[q - 1]);
@@ -751,7 +751,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.addEventListener("orientationchange", () => {
         if (donutChart && lastBalances) {
-
+            donutChart.dispose();
+            donutChart = null;
             createDonutChart(
                 lastEndInflation,
                 lastBalances,
@@ -765,8 +766,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.addEventListener("resize", () => {
         if (donutChart && lastBalances) {
-            donutChart.resize();
-
+            donutChart.dispose();
+            donutChart = null;
             createDonutChart(
                 lastEndInflation,
                 lastBalances,
@@ -777,6 +778,7 @@ document.addEventListener("DOMContentLoaded", function () {
             );
         }
     });
+
 
     document.querySelectorAll(".help").forEach(el => {
         el.addEventListener("click", function (e) {
@@ -794,6 +796,5 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".help.active").forEach(h => h.classList.remove("active"));
     });
 });
-
 
 
