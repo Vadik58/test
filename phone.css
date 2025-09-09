@@ -1,4 +1,4 @@
-@media (max-width: 600px) {
+@media screen and (max-width: 600px) {
 
     * {
         margin: 0;
@@ -33,12 +33,17 @@
         flex-direction: column;
 
         text-align: left;
-        border: 5px dotted mediumseagreen;
+        border-top: 5px dotted mediumseagreen;
+        border-bottom: 5px dotted mediumseagreen;
+        margin: 5px;
         padding: 25px;
         font-size: large;
         font-weight: lighter;
+    }
 
-        margin: 5px;
+    @media screen and (orientation: landscape) {
+        border-top: 5px dotted mediumseagreen;
+        border-bottom: 5px dotted mediumseagreen;
     }
 
     .calculator__input {
@@ -99,23 +104,13 @@
     }
 
     .calculator__button {
-        transition: transform 0.5s ease, background-color 0.5s ease;
+        transition: transform 0.2s ease, background-color 0.2s ease;
     }
 
-    .calculator__button:active {
+    .calculator__button:active,
+    .calculator__button.active {
         background-color: mediumseagreen;
         transform: scale(0.95);
-    }
-    
-    @media (min-width: 601px), (max-width: 1024px) {
-        .calculator__button {
-            transition: transform 0.2s ease, background-color 0.2s ease;
-        }
-
-        .calculator__button:active {
-            background-color: mediumseagreen;
-            transform: scale(0.95);
-        }
     }
 
     #exportExcel {
@@ -259,8 +254,3 @@
         color: cornflowerblue;
     }
 }
-
-
-
-
-
