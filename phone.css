@@ -106,17 +106,6 @@
         background-color: mediumseagreen;
         transform: scale(0.95);
     }
-    
-    @media (min-width: 601px), (max-width: 1024px) {
-        .calculator__button {
-            transition: transform 0.2s ease, background-color 0.2s ease;
-        }
-
-        .calculator__button:active {
-            background-color: mediumseagreen;
-            transform: scale(0.95);
-        }
-    }
 
     #exportExcel {
         margin-left: 15px;
@@ -259,4 +248,5 @@
         color: cornflowerblue;
     }
 }
+
 
