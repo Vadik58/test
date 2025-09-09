@@ -288,6 +288,13 @@ function checkIsMobile() {
     return window.innerWidth < 600;
 }
 
+let lastEndInflation = null;
+let lastBalances = null;
+let lastInvestedArr = null;
+let lastNDFL = null;
+let lastAdjustInflation = null;
+let lastAdjustTax = null;
+
 let donutChart;
 function createDonutChart(endInflation, balances, investedArr, NDFL, adjustInflation, adjustTax) {
     const donutEl = document.getElementById("donutChart");
@@ -654,6 +661,13 @@ function runCalculation() {
     document.querySelector('.chart').style.display = 'block';
     document.querySelector('.calculator__result-wrapper').classList.add('show');
 
+    lastEndInflation = endInflation;
+    lastBalances = balances;
+    lastInvestedArr = investedArr;
+    lastNDFL = NDFL;
+    lastAdjustInflation = adjustInflation;
+    lastAdjustTax = adjustTax;
+
     createChart(chartLabels, investedArr, balances);
     createDonutChart(endInflation, balances, investedArr, NDFL, adjustInflation, adjustTax);
 
@@ -733,7 +747,26 @@ document.addEventListener("DOMContentLoaded", function () {
         if (chartInstance) {
             chartInstance.resize();
         }
-        if (donutChart) {
+    });
+
+    window.addEventListener("orientationchange", () => {
+        if (donutChart && lastBalances) {
+
+            createDonutChart(
+                lastEndInflation,
+                lastBalances,
+                lastInvestedArr,
+                lastNDFL,
+                lastAdjustInflation,
+                lastAdjustTax
+            );
+        }
+    });
+
+    window.addEventListener("resize", () => {
+        if (donutChart && lastBalances) {
+            donutChart.resize();
+
             createDonutChart(
                 lastEndInflation,
                 lastBalances,
@@ -761,6 +794,5 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".help.active").forEach(h => h.classList.remove("active"));
     });
 });
-
 
 
