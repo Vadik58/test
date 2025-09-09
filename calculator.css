@@ -63,13 +63,19 @@
     font-family: inherit;
 
     padding: 10px;
-
-    transition: all 0.3s ease;
 }
 
-.calculator__button:hover {
-    transform: scale(1.05);
-    background-color: mediumseagreen;
+@media (hover: hover) and (pointer: fine) {
+    .calculator__button {
+        transition: all 0.3s ease;
+    }
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .calculator__button:hover {
+        transform: scale(1.05);
+        background-color: mediumseagreen;
+    }
 }
 
 #exportExcel {
@@ -150,6 +156,7 @@
     height: 100%;
     width: 100%;
 }
+
 
 
 
