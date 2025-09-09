@@ -1,4 +1,4 @@
-@media screen and (max-width: 600px) {
+@media (max-width: 600px) {
 
     * {
         margin: 0;
@@ -12,7 +12,6 @@
     }
 
     /*----------------------------------------------------------------------------------------------------------------*/
-
     .header {
         text-align: center;
 
@@ -24,7 +23,6 @@
     }
 
     /*----------------------------------------------------------------------------------------------------------------*/
-
     .calculator {
     }
 
@@ -39,11 +37,6 @@
         padding: 25px;
         font-size: large;
         font-weight: lighter;
-    }
-
-    @media screen and (orientation: landscape) {
-        border-top: 5px dotted mediumseagreen;
-        border-bottom: 5px dotted mediumseagreen;
     }
 
     .calculator__input {
@@ -103,13 +96,15 @@
         font-family: inherit;
     }
 
-    .calculator__button {
-        transition: transform 0.2s ease, background-color 0.2s ease;
-    }
+    @media (orientation: portrait) {
+        .calculator__button {
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
 
-    .calculator__button:active {
-        background-color: mediumseagreen;
-        transform: scale(0.95);
+        .calculator__button:active {
+            background-color: mediumseagreen;
+            transform: scale(0.95);
+        }
     }
 
     #exportExcel {
@@ -166,7 +161,6 @@
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
-        gap: 10px;
 
         margin: 0 5px;
         max-width: 100%;
@@ -197,8 +191,8 @@
 
     .donutChart-wrapper {
         width: 100%;
-        max-width: 440px;
-        margin-top: -50px;
+        max-width: 500px;
+        height: 230px;
 
         display: flex;
         justify-content: center;
@@ -206,7 +200,7 @@
     }
 
     #donutChart {
-        height: 100%;
+        height: 250%;
         width: 100%;
     }
 
@@ -214,7 +208,7 @@
 
     .chart {
         position: relative;
-        margin: 0 auto;
+        margin: 40px auto;
         width: 97%;
         height: 300px;
         background-color: white;
@@ -253,4 +247,3 @@
         color: cornflowerblue;
     }
 }
-
