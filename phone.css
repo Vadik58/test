@@ -99,7 +99,7 @@
     }
 
     .calculator__button {
-        transition: transform 0.2s ease, background-color 0.2s ease;
+        transition: transform 0.5s ease, background-color 0.5s ease;
     }
 
     .calculator__button:active {
@@ -259,6 +259,7 @@
         color: cornflowerblue;
     }
 }
+
 
 
 
