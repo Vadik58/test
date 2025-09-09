@@ -20,6 +20,13 @@
     }
 }
 
+@media (orientation: landscape) {
+    .calculator__form {
+        border-top: 5px dotted mediumseagreen;
+        border-bottom: 5px dotted mediumseagreen;
+    }
+}
+
 .calculator__input {
     margin-bottom: 10px;
     border: 3px solid mediumseagreen;
@@ -80,6 +87,17 @@
     .calculator__button:hover {
         transform: scale(1.05);
         background-color: mediumseagreen;
+    }
+}
+
+@media (orientation: landscape) {
+    .calculator__button {
+        transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .calculator__button:active{
+        background-color: mediumseagreen;
+        transform: scale(0.95);
     }
 }
 
