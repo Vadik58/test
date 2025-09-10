@@ -365,7 +365,7 @@ function createDonutChart(endInflation, balances, investedArr, NDFL, adjustInfla
 
                 return [x, y];
             }
-            },
+        },
         series: [
             {
                 type: 'pie',
@@ -474,15 +474,15 @@ function createChart(chartLabels, investedArr, balances) {
             },
         },
         dataZoom: checkIsMobile() ? [
-            { type: "inside" }] :
+                { type: "inside" }] :
             [ { type: "inside" },
                 {
-                type: "slider",
-                left: 70,
-                right: 90,
-                bottom: 20,
-            },
-        ],
+                    type: "slider",
+                    left: 70,
+                    right: 90,
+                    bottom: 20,
+                },
+            ],
         toolbox: {
             feature: {
                 saveAsImage: { title: "Скачать" },
@@ -690,7 +690,7 @@ document.addEventListener("DOMContentLoaded", function () {
         mask: Number,
         min: 0,
         max: 1000000000000,
-        thousandsSeparator: " ",
+        thousandsSeparator: ' ',
     });
 
     const inputRecurrent = document.getElementById("depositsAdd");
@@ -699,7 +699,7 @@ document.addEventListener("DOMContentLoaded", function () {
         mask: Number,
         min: 1,
         max: 1000000000000,
-        thousandsSeparator: " ",
+        thousandsSeparator: ' ',
     });
 
     const updateDepositAddState = () => {
@@ -743,27 +743,15 @@ document.addEventListener("DOMContentLoaded", function () {
         runCalculation();
     });
 
-    function debounce(fn, ms = 50) {
-        let t;
-        return (...args) => {
-            clearTimeout(t);
-            t = setTimeout(() => fn(...args), ms);
-        };
-    }
-
-    function safeResize() {
+    window.addEventListener("resize", function () {
         if (chartInstance) {
             chartInstance.resize();
         }
-        if (donutChart) {
-            donutChart.resize();
-        }
-    }
+    });
 
-    function safeRecreateDonut() {
+    window.addEventListener("orientationchange", () => {
         if (donutChart && lastBalances) {
-            donutChart.dispose();
-            donutChart = null;
+
             createDonutChart(
                 lastEndInflation,
                 lastBalances,
@@ -773,28 +761,38 @@ document.addEventListener("DOMContentLoaded", function () {
                 lastAdjustTax
             );
         }
-    }
+    });
 
-    window.addEventListener("resize", debounce(safeResize, 120));
-    window.addEventListener("orientationchange", debounce(safeRecreateDonut, 220));
+    window.addEventListener("resize", () => {
+        if (donutChart && lastBalances) {
+            donutChart.resize();
 
+            createDonutChart(
+                lastEndInflation,
+                lastBalances,
+                lastInvestedArr,
+                lastNDFL,
+                lastAdjustInflation,
+                lastAdjustTax
+            );
+        }
+    });
 
-    document.querySelectorAll(".help").forEach((el) => {
+    document.querySelectorAll(".help").forEach(el => {
         el.addEventListener("click", function (e) {
             e.stopPropagation();
             if (this.classList.contains("active")) {
                 this.classList.remove("active");
             } else {
-                document.querySelectorAll(".help.active").forEach((h) => h.classList.remove("active"));
+                document.querySelectorAll(".help.active").forEach(h => h.classList.remove("active"));
                 this.classList.add("active");
             }
         });
     });
 
     document.addEventListener("click", () => {
-        document.querySelectorAll(".help.active").forEach((h) => h.classList.remove("active"));
+        document.querySelectorAll(".help.active").forEach(h => h.classList.remove("active"));
     });
+
+    document.addEventListener("touchstart", () => {}, {passive: true});
 });
-
-
-
