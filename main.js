@@ -748,6 +748,38 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+// Оптимизированная обработка ресайза
+    let resizeTimeout;
+    let lastWindowWidth = window.innerWidth;
+    let lastWindowHeight = window.innerHeight;
+
+    function handleResize() {
+        const currentWidth = window.innerWidth;
+        const currentHeight = window.innerHeight;
+
+        // Проверяем, действительно ли изменился размер
+        if (currentWidth !== lastWindowWidth || currentHeight !== lastWindowHeight) {
+            lastWindowWidth = currentWidth;
+            lastWindowHeight = currentHeight;
+
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(redrawCharts, 100);
+        }
+    }
+
+// Вешаем обработчик только на resize
+    window.addEventListener("resize", handleResize);
+
+// Для orientationchange используем ту же функцию, но без debounce
+    window.addEventListener("orientationchange", function() {
+        clearTimeout(resizeTimeout);
+        // Небольшая задержка для того, чтобы размеры успели обновиться
+        setTimeout(redrawCharts, 50);
+    });
+
+// Убираем обработчик touchstart, так как он не нужен для ресайза
+// document.addEventListener("touchstart", () => {}, {passive: true});
+
     window.addEventListener("resize", redrawCharts);
     window.addEventListener("orientationchange", redrawCharts);
 
@@ -766,6 +798,4 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("click", () => {
         document.querySelectorAll(".help.active").forEach(h => h.classList.remove("active"));
     });
-
-    document.addEventListener("touchstart", () => {}, {passive: true});
 });
