@@ -748,40 +748,39 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-// Оптимизированная обработка ресайза
-    let resizeTimeout;
-    let lastWindowWidth = window.innerWidth;
-    let lastWindowHeight = window.innerHeight;
-
-    function handleResize() {
-        const currentWidth = window.innerWidth;
-        const currentHeight = window.innerHeight;
-
-        // Проверяем, действительно ли изменился размер
-        if (currentWidth !== lastWindowWidth || currentHeight !== lastWindowHeight) {
-            lastWindowWidth = currentWidth;
-            lastWindowHeight = currentHeight;
-
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(redrawCharts, 100);
+// Оптимизированная обработка ресайза с порогом изменения
+    function redrawCharts() {
+        if (chartInstance) {
+            chartInstance.resize();
+        }
+        if (lastBalances) {
+            createDonutChart(
+                lastEndInflation,
+                lastBalances,
+                lastInvestedArr,
+                lastNDFL,
+                lastAdjustInflation,
+                lastAdjustTax
+            );
         }
     }
 
-// Вешаем обработчик только на resize
-    window.addEventListener("resize", handleResize);
+// Используем MediaQueryList для отслеживания ориентации
+    const portraitMediaQuery = window.matchMedia("(orientation: portrait)");
+    const landscapeMediaQuery = window.matchMedia("(orientation: landscape)");
 
-// Для orientationchange используем ту же функцию, но без debounce
-    window.addEventListener("orientationchange", function() {
-        clearTimeout(resizeTimeout);
-        // Небольшая задержка для того, чтобы размеры успели обновиться
-        setTimeout(redrawCharts, 50);
-    });
+    function handleOrientationChange() {
+        // Задержка для стабилизации размеров после поворота
+        setTimeout(redrawCharts, 150);
+    }
 
-// Убираем обработчик touchstart, так как он не нужен для ресайза
-// document.addEventListener("touchstart", () => {}, {passive: true});
+// Подписываемся на изменения ориентации
+    portraitMediaQuery.addEventListener("change", handleOrientationChange);
+    landscapeMediaQuery.addEventListener("change", handleOrientationChange);
 
-    window.addEventListener("resize", redrawCharts);
-    window.addEventListener("orientationchange", redrawCharts);
+// Убираем ВСЕ другие обработчики resize
+// window.addEventListener("resize", ...);
+// window.addEventListener("orientationchange", ...);
 
     document.querySelectorAll(".help").forEach(el => {
         el.addEventListener("click", function (e) {
