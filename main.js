@@ -299,17 +299,20 @@ let donutChart;
 function createDonutChart(endInflation, balances, investedArr, NDFL, adjustInflation, adjustTax) {
     const donutEl = document.getElementById("donutChart");
 
-    if (!donutChart) {
-        donutChart = echarts.init(donutEl);
+    // Если график уже существует — уничтожаем его (чтобы пересоздать корректно)
+    if (donutChart) {
+        donutChart.dispose();
     }
+
+    donutChart = echarts.init(donutEl);
 
     const finalBalance = balances.at(-1);
     const finalInvested = investedArr.at(-1);
 
     const realInflation = adjustInflation ? finalBalance - NDFL - endInflation : 0;
-    const profit = adjustInflation ?
-        finalBalance - finalInvested - realInflation - (adjustTax ? NDFL : 0) :
-        finalBalance - finalInvested - (adjustTax ? NDFL : 0);
+    const profit = adjustInflation
+        ? finalBalance - finalInvested - realInflation - (adjustTax ? NDFL : 0)
+        : finalBalance - finalInvested - (adjustTax ? NDFL : 0);
 
     const data = [
         { value: Math.round(finalInvested), name: 'Вложенные\n средства', itemStyle: { color: 'steelblue' } },
@@ -336,44 +339,22 @@ function createDonutChart(endInflation, balances, investedArr, NDFL, adjustInfla
                 fontWeight: "lighter",
             }
         },
-        tooltip: { trigger: 'item',
+        tooltip: {
+            trigger: 'item',
             formatter: function(params) {
                 const formattedValue = formatResult(params.value);
                 return `${params.name}: ${formattedValue} (${Math.round(params.percent)}%)`;
             },
-            textStyle: {
-                fontSize: checkIsMobile() ? 12 : 15,
-            },
+            textStyle: { fontSize: checkIsMobile() ? 12 : 15 },
             confine: true,
             padding: checkIsMobile() ? 2 : 5,
-            position: function (point, params, dom, rect, size) {
-                let x = point[0];
-                let y = point[1];
-
-                const viewWidth = size.viewSize[0];
-                const viewHeight = size.viewSize[1];
-                const boxWidth = size.contentSize[0];
-                const boxHeight = size.contentSize[1];
-
-                if (x + boxWidth > viewWidth) {
-                    x = viewWidth - boxWidth - 10;
-                }
-
-                if (y + boxHeight > viewHeight) {
-                    y = viewHeight - boxHeight - 10;
-                }
-
-                return [x, y];
-            }
         },
         series: [
             {
                 type: 'pie',
                 radius: checkIsMobile() ? ['25%', '50%'] : ['35%', '63%'],
                 label: {
-                    formatter: function (params) {
-                        return `${params.name}\n${Math.round(params.percent)}%`;
-                    },
+                    formatter: p => `${p.name}\n${Math.round(p.percent)}%`,
                     fontSize: checkIsMobile() ? 13 : 16,
                     fontWeight: 'bold',
                     fontFamily: "Nunito",
@@ -384,6 +365,14 @@ function createDonutChart(endInflation, balances, investedArr, NDFL, adjustInfla
     };
 
     donutChart.setOption(option, true);
+
+    // сохраняем данные для пересоздания
+    lastEndInflation = endInflation;
+    lastBalances = balances;
+    lastInvestedArr = investedArr;
+    lastNDFL = NDFL;
+    lastAdjustInflation = adjustInflation;
+    lastAdjustTax = adjustTax;
 }
 
 let chartInstance;
@@ -743,15 +732,11 @@ document.addEventListener("DOMContentLoaded", function () {
         runCalculation();
     });
 
-    window.addEventListener("resize", function () {
+    function redrawCharts() {
         if (chartInstance) {
             chartInstance.resize();
         }
-    });
-
-    window.addEventListener("orientationchange", () => {
-        if (donutChart && lastBalances) {
-
+        if (lastBalances) {
             createDonutChart(
                 lastEndInflation,
                 lastBalances,
@@ -761,22 +746,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 lastAdjustTax
             );
         }
-    });
+    }
 
-    window.addEventListener("resize", () => {
-        if (donutChart && lastBalances) {
-            donutChart.resize();
-
-            createDonutChart(
-                lastEndInflation,
-                lastBalances,
-                lastInvestedArr,
-                lastNDFL,
-                lastAdjustInflation,
-                lastAdjustTax
-            );
-        }
-    });
+    window.addEventListener("resize", redrawCharts);
+    window.addEventListener("orientationchange", redrawCharts);
 
     document.querySelectorAll(".help").forEach(el => {
         el.addEventListener("click", function (e) {
