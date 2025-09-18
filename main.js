@@ -48,7 +48,6 @@ function validate(amount, rate, years, months, depositsAdd, adjustRecurrent) {
 
 
 
-// calculation.js
 function calculationInvestment(amount, rate, years, months, frequency, recurrentData = null) {
     const interestRate = rate / 100;
     const totalMonths = years * 12 + months;
@@ -132,7 +131,6 @@ function calculationInvestment(amount, rate, years, months, frequency, recurrent
             const startDay = Math.floor((quarter - 1) * daysPerQuarter) + 1;
             const endDay = Math.floor(quarter * daysPerQuarter);
 
-            // Проверяем пополнения в этом квартале
             const quarterDeposits = depositsTimeline.filter(d =>
                 d.day >= startDay && d.day <= endDay
             );
@@ -230,7 +228,6 @@ function applyTax(balances, investedArr, frequency, years, months) {
             monthlyProfits.push(profitMonth);
         }
     } else if (frequency === "quarterly") {
-        // Для квартального начисления распределяем прибыль по месяцам
         for (let q = 1; q < balances.length; q++) {
             const profitQuarter = (balances[q] - investedArr[q]) -
                 (balances[q - 1] - investedArr[q - 1]);
@@ -298,8 +295,7 @@ let lastAdjustTax = null;
 let donutChart;
 function createDonutChart(endInflation, balances, investedArr, NDFL, adjustInflation, adjustTax) {
     const donutEl = document.getElementById("donutChart");
-
-    // Если график уже существует — уничтожаем его (чтобы пересоздать корректно)
+    
     if (donutChart) {
         donutChart.dispose();
     }
@@ -366,7 +362,6 @@ function createDonutChart(endInflation, balances, investedArr, NDFL, adjustInfla
 
     donutChart.setOption(option, true);
 
-    // сохраняем данные для пересоздания
     lastEndInflation = endInflation;
     lastBalances = balances;
     lastInvestedArr = investedArr;
@@ -516,7 +511,6 @@ function createChart(chartLabels, investedArr, balances) {
 }
 
 
-// excel.js
 function createExcel(chartLabels, investedArr, balances) {
     const table = [
         ["Период", "Начальная сумма", "Конечная сумма"],
@@ -748,7 +742,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-// Оптимизированная обработка ресайза с порогом изменения
     function redrawCharts() {
         if (chartInstance) {
             chartInstance.resize();
@@ -765,22 +758,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-// Используем MediaQueryList для отслеживания ориентации
     const portraitMediaQuery = window.matchMedia("(orientation: portrait)");
     const landscapeMediaQuery = window.matchMedia("(orientation: landscape)");
 
     function handleOrientationChange() {
-        // Задержка для стабилизации размеров после поворота
         setTimeout(redrawCharts, 150);
     }
 
-// Подписываемся на изменения ориентации
     portraitMediaQuery.addEventListener("change", handleOrientationChange);
     landscapeMediaQuery.addEventListener("change", handleOrientationChange);
-
-// Убираем ВСЕ другие обработчики resize
-// window.addEventListener("resize", ...);
-// window.addEventListener("orientationchange", ...);
 
     document.querySelectorAll(".help").forEach(el => {
         el.addEventListener("click", function (e) {
@@ -798,3 +784,4 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".help.active").forEach(h => h.classList.remove("active"));
     });
 });
+
